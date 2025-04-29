@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE
 # mở ma trận
 with open('difficulty.txt', 'r') as f:
     maze_size = int(f.read().strip())
-with open(f"maze/{maze_size}.txt", 'r') as f:
+with open(f"Maze/{maze_size}.txt", 'r') as f:
     maze_matrix = json.load(f)
 
 maze_width = screen_width * 2 // 3

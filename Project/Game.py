@@ -3,7 +3,7 @@ import sys
 import random
 from Config import screen, screen_width, screen_height, maze_matrix, cell_width, cell_height, goal_image, goal_rect, background_image, lose_image, maze_size, win_image, key_image, font
 from Player import Player
-from Planets import planets
+
 from Maze import Maze
 from UI import draw_rounded_button
 from Colors import Colors
@@ -104,9 +104,6 @@ while True:
             elif buttons["simulated_annealing"].collidepoint(event.pos):
                 print("Simulated Annealing button clicked")
                 algorithm_selected = "Simulated Annealing"
-            elif buttons["RL"].collidepoint(event.pos):
-                print("RL button clicked")
-                exec(open("Qlearning.py", encoding="utf-8").read())
             elif buttons["exit"].collidepoint(event.pos):
                 print("Exit button clicked")
                 pygame.quit()
@@ -152,9 +149,7 @@ while True:
             collected_keys += 1
 
     screen.blit(background_image, (0, 0))
-    for planet in planets:
-        planet.update()
-        planet.draw(screen)
+      
     goal_x = (maze_size - 1) * cell_width + (cell_width - goal_rect.width) // 2
     goal_y = (maze_size - 1) * cell_height + (cell_height - goal_rect.height) // 2
     screen.blit(goal_image, (goal_x, goal_y))
@@ -165,7 +160,7 @@ while True:
         key.draw(screen)
 
     draw_rounded_button(buttons["reset"], "Reset", Colors.DARK_BLUE, 36 )
-    draw_rounded_button(buttons["RL"], "RL", Colors.DARK_BLUE, 36 )
+    
     draw_rounded_button(buttons["home"], "Home",Colors.DARK_BLUE, 36)
     draw_rounded_button(buttons["bfs"], "BFS", Colors.DARK_BLUE, 36)
     draw_rounded_button(buttons["simulated_annealing"], "SA", Colors.DARK_BLUE, 36)

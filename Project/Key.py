@@ -1,13 +1,13 @@
 import pygame
 import random
 from Config import maze_size, cell_width, cell_height, key_image
+
 class Key:
-    def __init__(self, x, y, image):
-        self.row = x
-        self.col = y
-        self.image = pygame.transform.scale(image, (cell_width, cell_height))
-        self.collected = False  # Trạng thái đã được thu thập hay chưa
+    def __init__(self, row, col):
+        self.row = row
+        self.col = col
         self.image = pygame.transform.scale(key_image, (cell_width, cell_height))
+        self.collected = False
 
     def draw(self, surface):
         if not self.collected:
@@ -15,8 +15,7 @@ class Key:
             y = self.row * cell_height
             surface.blit(self.image, (x, y))
 
-# Hàm random key
-def generate_random_keys(maze_matrix, num_keys, key_image):
+def generate_keys(maze_matrix, num_keys):
     keys = []
     rows = len(maze_matrix)
     cols = len(maze_matrix[0])
@@ -24,6 +23,16 @@ def generate_random_keys(maze_matrix, num_keys, key_image):
     while len(keys) < num_keys:
         row = random.randint(0, rows - 1)
         col = random.randint(0, cols - 1)
+        
+        # Đặt key ở ô trống, không phải start (0,0) và goal
         if maze_matrix[row][col] == 0 and (row, col) != (0, 0) and (row, col) != (maze_size - 1, maze_size - 1):
-            keys.append(Key(row, col, key_image))
+            keys.append(Key(row, col))
+    
     return keys
+
+def check_collect(player_row, player_col, keys):
+    for key in keys:
+        if not key.collected and key.row == player_row and key.col == player_col:
+            key.collected = True
+            return True  # Có key được nhặt
+    return False  # Không có key nào nhặt

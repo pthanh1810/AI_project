@@ -8,7 +8,7 @@ from Maze import Maze
 from UI import draw_rounded_button
 from Colors import Colors
 from Boat import Boat
-from Key import generate_random_keys
+from Key import generate_keys, check_collect
 from UI import create_buttons
 
 def ai_move(auto_move_path, auto_move_index, maze_matrix, boat):
@@ -35,7 +35,8 @@ def reset_game():
 
     # Random lại keys
     num_keys = random.randint(3, 5)  # Reset số lượng keys ngẫu nhiên
-    keys = generate_random_keys(maze_matrix, num_keys, key_image)  # Reset danh sách keys
+    keys = generate_keys(maze_matrix, num_keys)
+
     collected_keys = 0  # Reset số keys đã thu thập
 
     # Reset các biến trạng thái trò chơi
@@ -54,7 +55,7 @@ player = Player(0, 0)
 boat = Boat(maze_size - 1, 0)
 maze = Maze(maze_matrix)
 num_keys = random.randint(3, 5)
-keys = generate_random_keys(maze_matrix, num_keys, key_image)
+keys = generate_keys(maze_matrix, num_keys)
 collected_keys = 0
 buttons = create_buttons(screen_width, screen_height)
 
@@ -126,7 +127,17 @@ while True:
         boat.update_path(maze_matrix, (player.row, player.col), algorithm_selected)
         boat.move(maze_matrix)
 
-        if player.is_at_goal():
+        # Check if the boat catches the player
+        if (boat.row, boat.col) == (player.row, player.col):
+            game_over = True
+            player_won = False
+            game_completed = True
+
+
+    if check_collect(player.row, player.col, keys):
+        collected_keys += 1
+
+    if player.is_at_goal():
             # Game over logic\ưp
             
             if collected_keys == num_keys:
@@ -135,19 +146,7 @@ while True:
             else:
                 game_over = True
                 player_won = False
-
-        # Check if the boat catches the player
-        if (boat.row, boat.col) == (player.row, player.col):
-            game_over = True
-            player_won = False
-            game_completed = True
-
-
-    for key in keys:
-        if not key.collected and player.row == key.row and player.col == key.col:
-            key.collected = True
-            collected_keys += 1
-
+    
     screen.blit(background_image, (0, 0))
       
     goal_x = (maze_size - 1) * cell_width + (cell_width - goal_rect.width) // 2

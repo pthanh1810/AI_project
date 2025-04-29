@@ -160,9 +160,7 @@ while True:
                 pygame.mixer.music.stop()
    
 
-                with open('difficulty.txt', 'w') as f:
-                    f.write("")
-                    f.write(str(difficulty_value))
+                
                 import subprocess
 
                 subprocess.Popen(['python', 'Game.py'])

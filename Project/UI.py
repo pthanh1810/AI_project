@@ -18,7 +18,6 @@ def draw_rounded_button(button_rect, text, color, font_size, border_color_outer=
     screen.blit(label, label.get_rect(center=adjusted_rect.center))
 
 
-import pygame
 
 # Thiết lập các nút
 def create_buttons(screen_width, screen_height):
@@ -35,27 +34,22 @@ def create_buttons(screen_width, screen_height):
 
     buttons = {
         # Các nút thuật toán (sắp xếp bên phải màn hình)
-        #"stochastic_hc": pygame.Rect(button_x, algorithm_buttons_y, button_width, button_height),
-        "genetic_algorithm": pygame.Rect(button_x, algorithm_buttons_y + y_offset * 1, button_width, button_height),
-        #"greedy": pygame.Rect(button_x, algorithm_buttons_y + y_offset * 2, button_width, button_height),
         "stochastic_hc": pygame.Rect(button_x, algorithm_buttons_y + + y_offset * 2, button_width, button_height),
         "a_star": pygame.Rect(button_x, algorithm_buttons_y + y_offset * 3, button_width, button_height),
         "bfs": pygame.Rect(button_x, algorithm_buttons_y + y_offset * 4, button_width, button_height),
         "simulated_annealing": pygame.Rect(button_x, algorithm_buttons_y + y_offset * 5, button_width, button_height),
         "ucs": pygame.Rect(button_x, algorithm_buttons_y + y_offset * 6, button_width, button_height),
         "beam_search": pygame.Rect(button_x, algorithm_buttons_y + y_offset * 7, button_width, button_height),
-
+        
         # Các nút phía dưới (sắp xếp bên trái hơn các thuật toán)
         "reset": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 1, 200, 60),
-        "RL": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 2, 200, 60),
         "exit": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 3, 200, 60),
-
+        
         # Các nút khác (Home, Game, Start, Stop)
         "home": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 4, 200, 60),
         "game": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 5, 200, 60),
         "start": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 6, 200, 60),
         "stop": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 7, 200, 60),
-        "backtracking": pygame.Rect(screen_width - 220, screen_height - bottom_y_offset * 8, 200, 60),
     }
 
     return buttons
